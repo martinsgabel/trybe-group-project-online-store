@@ -4,8 +4,8 @@ class Home extends React.Component{
   render() {
     return (
       <section className="main-section-home">
-        <input></input>
-        <button type="button"></button>
+        <input type="text"></input>
+        <button type="button">Lupa</button>
         <p data-testid="home-initial-message">"Digite algum termo de pesquisa ou escolha uma categoria."</p>
       </section>
     )
