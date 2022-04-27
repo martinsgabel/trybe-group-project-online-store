@@ -1,4 +1,4 @@
-export async function getCategories() {
+export default async function getCategories() {
   const endpoint = 'https://api.mercadolibre.com/sites/MLB/categories'; // Endereco para requisicao de categoras da API
 
   const categories = await fetch(endpoint) // O fetch obtem a resposta do endpoint selecionado e depois essa reposta e convertida em um objeto json que pode ser trabalhado pela aplicacao
