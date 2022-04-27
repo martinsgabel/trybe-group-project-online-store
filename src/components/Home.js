@@ -6,7 +6,9 @@ class Home extends React.Component {
       <section className="main-section-home">
         <input type="text" />
         <button type="button">Lupa</button>
-        <p data-testid="home-initial-message">Digite algum termo de pesquisa ou escolha uma categoria.</p>
+        <p data-testid="home-initial-message">
+          Digite algum termo de pesquisa ou escolha uma categoria.
+        </p>
       </section>
     );
   }
