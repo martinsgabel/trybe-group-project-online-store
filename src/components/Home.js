@@ -1,5 +1,6 @@
 import React from 'react';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import ProductsCards from './ProductsCards';
 import ShoppingCartButton from './ShoppingCartButton';
 
 class Home extends React.Component {
@@ -13,6 +14,7 @@ class Home extends React.Component {
     this.state = {
       categoriesList: [],
       inputSearch: '',
+      productsList: [],
     };
   }
 
@@ -38,18 +40,20 @@ class Home extends React.Component {
   async gettingProducts() {
     const { inputSearch } = this.state;
     const products = await getProductsFromCategoryAndQuery(inputSearch);
-    console.log(products);
-    return products;
+
+    this.setState({
+      productsList: products,
+    });
   }
 
   render() {
-    const { categoriesList } = this.state;
+    const { categoriesList, productsList } = this.state;
     return (
       <section className="main-section-home">
-        <div className="searchbar">
+        <form className="searchbar">
           <input type="text" onChange={ (e) => this.getInput(e) } />
           <button type="button" onClick={ this.gettingProducts }>Lupa</button>
-        </div>
+        </form>
         <div>
           <p data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
@@ -73,6 +77,9 @@ class Home extends React.Component {
               ))
             }
           </nav>
+          <div>
+            <ProductsCards productsList={ productsList } />
+          </div>
         </div>
       </section>
     );
