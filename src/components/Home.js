@@ -55,12 +55,18 @@ class Home extends React.Component {
     return (
       <section className="main-section-home">
         <form className="searchbar">
-          {/* eslint-disable-next-line max-len */}
-          {/* O Lint não aceita que as linhas abaixo tenham o tamanho minimo necessario, pois somos obrigados a usar "data-testid" e isso que causa elas passarem do tamanho permitido pelo Lint! Portanto, como se trata de uma condica do projeto, desabilitamos essa regra especifica do Lint somente nessas linhas especificas. */}
-          {/* eslint-disable-next-line max-len */}
-          <input type="text" onChange={ (e) => this.getInput(e) } data-testid="query-input" />
-          {/* eslint-disable-next-line max-len */}
-          <button type="button" onClick={ this.gettingProducts } data-testid="query-button">Lupa</button>
+          <input
+            type="text"
+            onChange={ (e) => this.getInput(e) }
+            data-testid="query-input"
+          />
+          <button
+            type="button"
+            onClick={ this.gettingProducts }
+            data-testid="query-button"
+          >
+            Lupa
+          </button>
         </form>
         <div>
           <ShoppingCartButton />
