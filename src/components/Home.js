@@ -1,5 +1,6 @@
 import React from 'react';
 import getCategories from '../services/api';
+import ShoppingCartButton from './ShoppingCartButton';
 
 class Home extends React.Component {
   constructor() {
@@ -36,6 +37,9 @@ class Home extends React.Component {
           <p data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
+        </div>
+        <div>
+          <ShoppingCartButton />
         </div>
         <div>
           <nav>
