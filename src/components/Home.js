@@ -24,7 +24,6 @@ class Home extends React.Component {
 
   async gettingCategories() {
     const lista = await getCategories();
-    console.log(lista);
 
     this.setState({
       categoriesList: lista,
@@ -42,23 +41,27 @@ class Home extends React.Component {
     const products = await getProductsFromCategoryAndQuery(inputSearch);
 
     this.setState({
-      productsList: products,
+      productsList: products.results,
     });
   }
 
   render() {
     const { categoriesList, productsList } = this.state;
+    const msgInitial = (
+      <p data-testid="home-initial-message">
+        Digite algum termo de pesquisa ou escolha uma categoria.
+      </p>
+    );
     return (
       <section className="main-section-home">
         <form className="searchbar">
-          <input type="text" onChange={ (e) => this.getInput(e) } />
-          <button type="button" onClick={ this.gettingProducts }>Lupa</button>
+          {/* eslint-disable-next-line max-len */}
+          {/* O Lint não aceita que as linhas abaixo tenham o tamanho minimo necessario, pois somos obrigados a usar "data-testid" e isso que causa elas passarem do tamanho permitido pelo Lint! Portanto, como se trata de uma condica do projeto, desabilitamos essa regra especifica do Lint somente nessas linhas especificas. */}
+          {/* eslint-disable-next-line max-len */}
+          <input type="text" onChange={ (e) => this.getInput(e) } data-testid="query-input" />
+          {/* eslint-disable-next-line max-len */}
+          <button type="button" onClick={ this.gettingProducts } data-testid="query-button">Lupa</button>
         </form>
-        <div>
-          <p data-testid="home-initial-message">
-            Digite algum termo de pesquisa ou escolha uma categoria.
-          </p>
-        </div>
         <div>
           <ShoppingCartButton />
         </div>
@@ -78,7 +81,8 @@ class Home extends React.Component {
             }
           </nav>
           <div>
-            <ProductsCards productsList={ productsList } />
+            { productsList.length <= 0
+              ? (msgInitial) : (<ProductsCards productsList={ productsList } />) }
           </div>
         </div>
       </section>
