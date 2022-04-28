@@ -2,7 +2,7 @@ import React from 'react';
 
 class ShoppingCartPage extends React.Component {
   render() {
-    return(
+    return (
       <div>
         <p data-testid="shopping-cart-empty-message">
           Seu carrinho está vazio
