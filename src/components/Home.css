@@ -24,8 +24,8 @@
 
 .searchbar {
   display: flex;
-  flex-flow: row;
   align-items: flex-start;
+  flex-flow: row;
 }
 
 .searchbar input {
