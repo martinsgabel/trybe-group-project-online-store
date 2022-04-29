@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main-section-home {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 30px;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.search-list {
+  display: flex;
+  flex-flow: column;
+  width: 70%;
+}
+
+.searchbar {
+  display: flex;
+  flex-flow: row;
+  align-items: flex-start;
+}
+
+.searchbar input {
+  flex-grow: 2;
+}

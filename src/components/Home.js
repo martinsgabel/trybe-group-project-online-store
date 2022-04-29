@@ -2,6 +2,7 @@ import React from 'react';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import ProductsCards from './ProductsCards';
 import ShoppingCartButton from './ShoppingCartButton';
+import './Home.css';
 
 class Home extends React.Component {
   constructor() {
@@ -54,24 +55,7 @@ class Home extends React.Component {
     );
     return (
       <section className="main-section-home">
-        <form className="searchbar">
-          <input
-            type="text"
-            onChange={ (e) => this.getInput(e) }
-            data-testid="query-input"
-          />
-          <button
-            type="button"
-            onClick={ this.gettingProducts }
-            data-testid="query-button"
-          >
-            Lupa
-          </button>
-        </form>
-        <div>
-          <ShoppingCartButton />
-        </div>
-        <div>
+        <div className="categories">
           <nav>
             {
               categoriesList.map((category) => (
@@ -86,6 +70,25 @@ class Home extends React.Component {
               ))
             }
           </nav>
+        </div>
+        <div className="search-list">
+          <form className="searchbar">
+            <input
+              type="text"
+              onChange={ (e) => this.getInput(e) }
+              data-testid="query-input"
+            />
+            <button
+              type="button"
+              onClick={ this.gettingProducts }
+              data-testid="query-button"
+            >
+              Lupa
+            </button>
+            <div>
+              <ShoppingCartButton />
+            </div>
+          </form>
           <div>
             { productsList.length <= 0
               ? (msgInitial) : (<ProductsCards productsList={ productsList } />) }
