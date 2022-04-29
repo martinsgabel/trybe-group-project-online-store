@@ -11,10 +11,12 @@ class Home extends React.Component {
     this.gettingCategories = this.gettingCategories.bind(this);
     this.getInput = this.getInput.bind(this);
     this.gettingProducts = this.gettingProducts.bind(this);
+    this.selectCategory = this.selectCategory.bind(this);
 
     this.state = {
       categoriesList: [],
-      inputSearch: '',
+      inputValue: '',
+      searchValue: '',
       productsList: [],
     };
   }
@@ -33,16 +35,28 @@ class Home extends React.Component {
 
   getInput(event) {
     this.setState({
-      inputSearch: event.target.value,
+      inputValue: event.target.value,
     });
   }
 
   async gettingProducts() {
-    const { inputSearch } = this.state;
-    const products = await getProductsFromCategoryAndQuery(inputSearch);
+    const { inputValue } = this.state;
+    const products = await getProductsFromCategoryAndQuery(inputValue)
+      .then((response) => response.results);
 
     this.setState({
-      productsList: products.results,
+      productsList: products,
+      searchValue: inputValue,
+    });
+  }
+
+  async selectCategory(categoryId) {
+    const { searchValue } = this.state;
+    const filterProducts = await getProductsFromCategoryAndQuery(searchValue, categoryId)
+      .then((response) => response.results);
+
+    this.setState({
+      productsList: filterProducts,
     });
   }
 
@@ -55,22 +69,21 @@ class Home extends React.Component {
     );
     return (
       <section className="main-section-home">
-        <div className="categories">
-          <nav>
-            {
-              categoriesList.map((category) => (
-                <button
-                  data-testid="category"
-                  type="button"
-                  id="radiobutton"
-                  key={ category.id }
-                >
-                  { category.name }
-                </button>
-              ))
-            }
-          </nav>
-        </div>
+        <nav className="categories">
+          {
+            categoriesList.map((category) => (
+              <button
+                data-testid="category"
+                type="button"
+                id={ category.id }
+                key={ category.id }
+                onClick={ (e) => this.selectCategory(e.target.id) }
+              >
+                { category.name }
+              </button>
+            ))
+          }
+        </nav>
         <div className="search-list">
           <form className="searchbar">
             <input
