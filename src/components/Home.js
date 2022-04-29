@@ -1,5 +1,6 @@
 import React from 'react';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import ProductsCards from './ProductsCards';
 import ShoppingCartButton from './ShoppingCartButton';
 
 class Home extends React.Component {
@@ -7,9 +8,13 @@ class Home extends React.Component {
     super();
 
     this.gettingCategories = this.gettingCategories.bind(this);
+    this.getInput = this.getInput.bind(this);
+    this.gettingProducts = this.gettingProducts.bind(this);
 
     this.state = {
       categoriesList: [],
+      inputSearch: '',
+      productsList: [],
     };
   }
 
@@ -25,19 +30,44 @@ class Home extends React.Component {
     });
   }
 
+  getInput(event) {
+    this.setState({
+      inputSearch: event.target.value,
+    });
+  }
+
+  async gettingProducts() {
+    const { inputSearch } = this.state;
+    const products = await getProductsFromCategoryAndQuery(inputSearch);
+
+    this.setState({
+      productsList: products.results,
+    });
+  }
+
   render() {
-    const { categoriesList } = this.state;
+    const { categoriesList, productsList } = this.state;
+    const msgInitial = (
+      <p data-testid="home-initial-message">
+        Digite algum termo de pesquisa ou escolha uma categoria.
+      </p>
+    );
     return (
       <section className="main-section-home">
-        <div className="searchbar">
-          <input type="text" />
-          <button type="button">Lupa</button>
-        </div>
-        <div>
-          <p data-testid="home-initial-message">
-            Digite algum termo de pesquisa ou escolha uma categoria.
-          </p>
-        </div>
+        <form className="searchbar">
+          <input
+            type="text"
+            onChange={ (e) => this.getInput(e) }
+            data-testid="query-input"
+          />
+          <button
+            type="button"
+            onClick={ this.gettingProducts }
+            data-testid="query-button"
+          >
+            Lupa
+          </button>
+        </form>
         <div>
           <ShoppingCartButton />
         </div>
@@ -56,6 +86,10 @@ class Home extends React.Component {
               ))
             }
           </nav>
+          <div>
+            { productsList.length <= 0
+              ? (msgInitial) : (<ProductsCards productsList={ productsList } />) }
+          </div>
         </div>
       </section>
     );
