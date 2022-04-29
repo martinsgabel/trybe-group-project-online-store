@@ -15,3 +15,12 @@ export async function getProductsFromCategoryAndQuery(categoryId, query) {
 
   return products;
 }
+
+export async function getProductFromId(productId) {
+  const endpoint = `https://api.mercadolibre.com/items/${productId}`; // Endereco de pesquisa por produto específico
+
+  const product = await fetch(endpoint)
+    .then((response) => response.json());
+
+  return product;
+}
