@@ -8,8 +8,8 @@ class ShoppingCartButton extends React.Component {
         <Link to="/cart" data-testid="shopping-cart-button">
           <img
             className="cart-image"
-            width="40"
-            height="40"
+            width="20"
+            height="20"
             src="https://cdn-icons-png.flaticon.com/512/263/263142.png"
             alt="imagem-do-carrinho-de-compras"
           />
