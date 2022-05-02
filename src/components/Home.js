@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import './Home.css';
 import ProductsCards from './ProductsCards';
 import ShoppingCartButton from './ShoppingCartButton';
-import './Home.css';
 
 class Home extends React.Component {
   constructor() {
@@ -62,6 +63,7 @@ class Home extends React.Component {
 
   render() {
     const { categoriesList, productsList } = this.state;
+    const { addItem } = this.props;
     const msgInitial = (
       <p data-testid="home-initial-message">
         Digite algum termo de pesquisa ou escolha uma categoria.
@@ -96,7 +98,7 @@ class Home extends React.Component {
               onClick={ this.gettingProducts }
               data-testid="query-button"
             >
-              Lupa
+              Procurar
             </button>
             <div>
               <ShoppingCartButton />
@@ -104,12 +106,21 @@ class Home extends React.Component {
           </form>
           <div>
             { productsList.length <= 0
-              ? (msgInitial) : (<ProductsCards productsList={ productsList } />) }
+              ? (msgInitial) : (
+                <ProductsCards
+                  productsList={ productsList }
+                  addItem={ addItem }
+                />
+              )}
           </div>
         </div>
       </section>
     );
   }
 }
+
+Home.propTypes = {
+  addItem: PropTypes.func.isRequired,
+};
 
 export default Home;
