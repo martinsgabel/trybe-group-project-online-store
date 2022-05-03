@@ -69,6 +69,7 @@ class App extends React.Component {
             render={ (props) => (
               <ProductDetails
                 query={ props.match.params.id }
+                addItem={ this.addItem }
               />) }
           />
         </BrowserRouter>
