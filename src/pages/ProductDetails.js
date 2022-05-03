@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { getProductFromId } from '../services/api';
-import ShoppingCartButton from '../components/ShoppingCartButton';
+import React from 'react';
 import GoBackButton from '../components/GoBackButton';
+import ShoppingCartButton from '../components/ShoppingCartButton';
+import { getProductFromId } from '../services/api';
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -15,31 +15,39 @@ class ProductDetails extends React.Component {
 
   async componentDidMount() {
     const { query } = this.props;
-    const productchartconst = await getProductFromId(query);
-    console.log(query);
+    const productchart = await getProductFromId(query);
+    // console.log(query);
 
     this.setState({
-      productchart: productchartconst,
+      productchart,
     });
   }
 
   render() {
-    const { productchart: { title, price, thumbnail, condition,
-      sold_quantity: soldQuantity, domain_id: domainId } } = this.state;
+    const { productchart } = this.state;
+    const { addItem } = this.props;
+
     return (
       <section className="producst-details">
-        <h1 data-testid="product-detail-name">{`${title} - R$ ${price}`}</h1>
+        <h1 data-testid="product-detail-name">
+          {`${productchart.title} - R$ ${productchart.price}`}
+        </h1>
+        <img src={ productchart.thumbnail } alt={ productchart.title } />
         <div>
-          <img src={ thumbnail } alt={ title } />
-          <div>
-            <p>Especificações Técnicas</p>
-            <ul>
-              <li>{ condition }</li>
-              <li>{ soldQuantity }</li>
-              <li>{ domainId }</li>
-            </ul>
-          </div>
+          <p>Especificações Técnicas</p>
+          <ul>
+            <li>{ productchart.condition }</li>
+            <li>{ productchart.soldQuantity }</li>
+            <li>{ productchart.domainId }</li>
+          </ul>
         </div>
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => addItem(productchart) }
+        >
+          Adicionar ao carrinho
+        </button>
         <div>
           <ShoppingCartButton />
           <GoBackButton />
@@ -51,6 +59,7 @@ class ProductDetails extends React.Component {
 
 ProductDetails.propTypes = {
   query: PropTypes.string.isRequired,
+  addItem: PropTypes.func.isRequired,
 };
 
 export default ProductDetails;
